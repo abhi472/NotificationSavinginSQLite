@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.abhishek.notificationsavinginsqlite.Adapters.RecyclePageAdapter;
 import com.example.abhishek.notificationsavinginsqlite.Callbacks.ICallBack;
@@ -25,7 +24,6 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,15 +31,15 @@ import java.util.Date;
 
 public class NotificationAc extends AppCompatActivity implements ICallBack {
 
-    ArrayList<NotContent> val = new ArrayList<>();
     ObjectMapper om = new ObjectMapper();
     NotStatus helper;
     Uri uri;
-    NotStatus notStatus = new NotStatus(this);
     Cursor cursor;
     String url = "https://gist.githubusercontent.com/abhi472/f7381ecb42e7e8c1d1f1ccc78403ac1f/raw/ad432913f7709f24f306b0b40f9dcc2945a97ee3/file";
     ArrayList<NotContent> notif = new ArrayList<>();
     RecyclerView rv;
+    ArrayList<NotContent> expired = new ArrayList<>();
+    ArrayList<NotContent> live = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +94,16 @@ public class NotificationAc extends AppCompatActivity implements ICallBack {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+        }
+        if(id== R.id.live)
+        {
+            setupRecyclerView(rv,live);
+
+        }
+        if (id == R.id.expired)
+        {
+            setupRecyclerView(rv,expired);
         }
 
         return super.onOptionsItemSelected(item);
@@ -109,17 +117,15 @@ public class NotificationAc extends AppCompatActivity implements ICallBack {
     private void updateUI() throws ParseException {
         uri = NotStatus.CONTENT_URI;
         cursor = this.getContentResolver().query(uri, null, null, null, null);
-        ArrayList<NotContent> expired = new ArrayList<>();
-        NotContent nc = new NotContent();
-        ArrayList<NotContent> live = new ArrayList<>();
+
+        NotContent nc;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date d = new Date(); //current date is taken from system here
         if (cursor.moveToFirst()) {
             do {
                 nc = new NotContent();
-                //Toast.makeText(this,""+d,Toast.LENGTH_SHORT).show();
-                //saving list according to date here i am filtering the live contests and populating arraylist with expired content
-                if (sdf.parse(cursor.getString(cursor.getColumnIndex(NotStatus.EXPDATE))).compareTo(d) > 0) {
+
+                if (sdf.parse(cursor.getString(cursor.getColumnIndex(NotStatus.EXPDATE))).compareTo(d) < 0) {
                     nc.title = cursor.getString(cursor.getColumnIndex(NotStatus.TITLE));
                     nc.alert = cursor.getString(cursor.getColumnIndex(NotStatus.DESC));
                     nc.storeId = cursor.getString(cursor.getColumnIndex(NotStatus.STOREID));
@@ -128,13 +134,21 @@ public class NotificationAc extends AppCompatActivity implements ICallBack {
                     nc.expdate = cursor.getString(cursor.getColumnIndex(NotStatus.EXPDATE));
                     expired.add(nc);
                 }
+                else
+                {
+                    nc.title = cursor.getString(cursor.getColumnIndex(NotStatus.TITLE));
+                    nc.alert = cursor.getString(cursor.getColumnIndex(NotStatus.DESC));
+                    nc.storeId = cursor.getString(cursor.getColumnIndex(NotStatus.STOREID));
+                    nc.img = cursor.getString(cursor.getColumnIndex(NotStatus.IMAGE));
+                    nc.uri = cursor.getString(cursor.getColumnIndex(NotStatus.URI));
+                    nc.expdate = cursor.getString(cursor.getColumnIndex(NotStatus.EXPDATE));
+                    live.add(nc);
+                }
 
             } while (cursor.moveToNext());
         }
         cursor.close();
-        setupRecyclerView(rv, expired);// different recyclervierws can have different ArrayLists
-
-
+      //  setupRecyclerView(rv, expired);// different recyclervierws can have different ArrayLists
 
 
     }

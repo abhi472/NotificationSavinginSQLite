@@ -12,8 +12,19 @@
     tools:context=".Activity.NotificationAc"
     tools:showIn="@layout/activity_notification">
 
-   <android.support.v7.widget.RecyclerView
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="click on settings menu to create database \n click on one to setup the arraylists \n click on either live or expired after that"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <android.support.v7.widget.RecyclerView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
        android:id="@+id/recycle"/>
+
 </RelativeLayout>

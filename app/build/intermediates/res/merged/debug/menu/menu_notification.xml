@@ -13,4 +13,14 @@
         android:orderInCategory="101"
         android:title="one"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/expired"
+        android:orderInCategory="101"
+        android:title="expired"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/live"
+        android:orderInCategory="101"
+        android:title="live"
+        app:showAsAction="never"/>
 </menu>
