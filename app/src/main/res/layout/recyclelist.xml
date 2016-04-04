@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:layout_height="wrap_content">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/logo"
+    android:text="Flipkart Cashbacks and Coupons"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo2"
+        android:layout_below="@id/logo"
+        android:text="Flipkart Cashbacks and Coupons"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo3"
+        android:layout_below="@id/logo2"
+        android:text="Flipkart Cashbacks and Coupons"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo4"
+        android:layout_below="@id/logo3"
+        android:text="Flipkart Cashbacks and Coupons"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo5"
+        android:layout_below="@id/logo4"
+        android:text="Flipkart Cashbacks and Coupons"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo6"
+        android:layout_below="@id/logo5"
+        android:text="Flipkart Cashbacks and Coupons"/>
+
+
+</RelativeLayout>
